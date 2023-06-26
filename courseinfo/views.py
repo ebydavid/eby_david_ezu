@@ -76,13 +76,15 @@ class CourseDetail(View):
             Course,
             pk=pk
         )
+        id = course.course_id
         number = course.course_number
         name = course.course_name
         course_list = Course.objects.all()
         return render(
             request,
             'courseinfo/course_list_detail.html',
-           {'course': course,
+           {'id': id,
+            'course': course,
             'number': number,
             'name': name,
             'course_list': course_list}
@@ -121,6 +123,40 @@ class StudentList(View):
             )
 
 
+class StudentDetail(View):
+    def get(self, request, pk):
+        student = get_object_or_404(
+            Student,
+            pk=pk
+        )
+        id = student.student_id
+        student_list = Student.objects.all()
+        return render(
+            request,
+            'courseinfo/student_detail.html',
+            {'student': student, 'id': id, 'student_list': student_list}
+        )
+#
+
+# class StudentDetail(View):
+#     def get(self, request, pk):
+#         student = get_object_or_404(
+#             Student,
+#             pk=pk
+#         )
+#         firstname = student.first_name
+#         lastname = student.last_name
+#         student_list = Student.objects.all()
+#         return render(
+#             request,
+#             'courseinfo/student_detail.html',
+#             {'student': student,
+#              'firstname': firstname,
+#              'lastname': lastname,
+#              'student_list': student_list}
+#         )
+
+
 class RegistrationList(View):
     def get(self, request):
         return render(
@@ -129,3 +165,27 @@ class RegistrationList(View):
             {'registration_list': Registration.objects.all()}
         )
 
+class RegistrationDetail(View):
+    def get(self, request, pk):
+        registration = get_object_or_404(
+            Registration,
+            pk=pk
+        )
+        number = registration.registration_id
+        section = registration.section_id
+        student = registration.student_id
+        registration_list = Registration.objects.all()
+        return render(
+            request,
+            'courseinfo/registration_detail.html',
+           {'registration': registration,
+            'number': number,
+            'section': section,
+            'student': student,
+            'registration_list': registration_list}
+        )
+
+
+
+# class CourseDetail(View):
+#     def get(self, request, pk):

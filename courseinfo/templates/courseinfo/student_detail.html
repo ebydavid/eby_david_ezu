@@ -1,40 +1,44 @@
 {% extends 'courseinfo/base.html' %}
 
 {% block title %}
-    Instructor - {{ instructor }}
+    Student - {{ Student }}
 {% endblock %}
 
 {% block content %}
-    <h2>{{ instructor }}</h2>
+    <h2>{{ student }}</h2>
 
     <section>
         <table>
             <tr>
                 <th>First Name:</th>
-                <td>{{ instructor.first_name }}</td>
+                <td>{{ student.first_name }}</td>
             </tr>
             <tr>
                 <th>Last Name:</th>
-                <td>{{ instructor.last_name }}</td>
+                <td>{{ student.last_name }}</td>
             </tr>
-            {% if instructor.disambiguator %}
+            {% if student.disambiguator %}
                 <tr>
                     <th>Disambiguator:</th>
-                    <td>{{ instructor.disambiguator }}</td>
+                    <td>{{ student.disambiguator }}</td>
                 </tr>
             {% endif %}
+            <tr>
+                    <th>Student ID:</th>
+                    <td>{{ id }}</td>
+                </tr>
         </table>
     </section>
 
     <section>
-        <h3>Sections Taught</h3>
+        <h3>All Students:</h3>
         <ul>
-            {% for section in section_list %}
+            {% for student in student_list %}
                 <li>
-                    <a href="">{{ section }}</a>
+                    <a href="">{{ student }}</a>
                 </li>
             {% empty %}
-                <li><em>There are currently no sections for this instructor.</em></li>
+                <li><em>There are currently no students.</em></li>
             {% endfor %}
         </ul>
     </section>
