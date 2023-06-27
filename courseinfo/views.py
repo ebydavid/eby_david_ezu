@@ -10,6 +10,7 @@ from courseinfo.models import (
     Registration
 )
 
+
 class InstructorList(View):
     def get(self, request):
         return render(
@@ -17,6 +18,7 @@ class InstructorList(View):
             'courseinfo/instructor_list.html',
             {'instructor_list': Instructor.objects.all()}
         )
+
 
 class InstructorDetail(View):
     def get(self, request, pk):
@@ -30,6 +32,7 @@ class InstructorDetail(View):
             'courseinfo/instructor_detail.html',
             {'instructor': instructor, 'section_list': section_list}
         )
+
 
 class SectionList(View):
     def get(self, request):
@@ -55,7 +58,7 @@ class SectionDetail(View):
             request,
             'courseinfo/section_detail.html',
             {'section': section,
-             'semester' : semester,
+             'semester': semester,
              'course': course,
              'instructor': instructor,
              'registration_list': registration_list}
@@ -70,6 +73,7 @@ class CourseList(View):
             {'course_list': Course.objects.all()}
         )
 
+
 class CourseDetail(View):
     def get(self, request, pk):
         course = get_object_or_404(
@@ -83,20 +87,21 @@ class CourseDetail(View):
         return render(
             request,
             'courseinfo/course_list_detail.html',
-           {'id': id,
-            'course': course,
-            'number': number,
-            'name': name,
-            'course_list': course_list}
+            {'id': id,
+             'course': course,
+             'number': number,
+             'name': name,
+             'course_list': course_list}
         )
 
+
 class SemesterList(View):
-        def get(self, request):
-            return render(
-                request,
-                'courseinfo/semester_list.html',
-                {'semester_list': Semester.objects.all()}
-            )
+    def get(self, request):
+        return render(
+            request,
+            'courseinfo/semester_list.html',
+            {'semester_list': Semester.objects.all()}
+        )
 
 
 class SemesterDetail(View):
@@ -113,14 +118,13 @@ class SemesterDetail(View):
         )
 
 
-
 class StudentList(View):
-        def get(self, request):
-            return render(
-                request,
-                'courseinfo/student_list.html',
-                {'student_list': Student.objects.all()}
-            )
+    def get(self, request):
+        return render(
+            request,
+            'courseinfo/student_list.html',
+            {'student_list': Student.objects.all()}
+        )
 
 
 class StudentDetail(View):
@@ -136,25 +140,6 @@ class StudentDetail(View):
             'courseinfo/student_detail.html',
             {'student': student, 'id': id, 'student_list': student_list}
         )
-#
-
-# class StudentDetail(View):
-#     def get(self, request, pk):
-#         student = get_object_or_404(
-#             Student,
-#             pk=pk
-#         )
-#         firstname = student.first_name
-#         lastname = student.last_name
-#         student_list = Student.objects.all()
-#         return render(
-#             request,
-#             'courseinfo/student_detail.html',
-#             {'student': student,
-#              'firstname': firstname,
-#              'lastname': lastname,
-#              'student_list': student_list}
-#         )
 
 
 class RegistrationList(View):
@@ -164,6 +149,7 @@ class RegistrationList(View):
             'courseinfo/registration_list.html',
             {'registration_list': Registration.objects.all()}
         )
+
 
 class RegistrationDetail(View):
     def get(self, request, pk):
@@ -178,14 +164,9 @@ class RegistrationDetail(View):
         return render(
             request,
             'courseinfo/registration_detail.html',
-           {'registration': registration,
-            'number': number,
-            'section': section,
-            'student': student,
-            'registration_list': registration_list}
+            {'registration': registration,
+             'number': number,
+             'section': section,
+             'student': student,
+             'registration_list': registration_list}
         )
-
-
-
-# class CourseDetail(View):
-#     def get(self, request, pk):
