@@ -1,5 +1,3 @@
-
-
 {% extends 'courseinfo/base.html' %}
 
 {% block title %}
@@ -9,7 +7,7 @@
 {% block content %}
     <h2>Instructor List</h2>
     <div>
-    <a href="{% url 'courseinfo_instructor_create_urlpattern' %}">
+      <a href="{% url 'courseinfo_instructor_create_urlpattern' %}">
         Create New Instructor</a>
     </div>
     <ul>
@@ -19,8 +17,27 @@
             </li>
         {% empty %}
             <li><em>There are currently no instructors available.</em></li>
-        {%  endfor %}
+        {% endfor %}
     </ul>
+
+      {% if is_paginated %}
+    <ul>
+      {% if previous_page_url %}
+        <li>
+          <a href="{{ previous_page_url }}">
+            Previous</a>
+        </li>
+      {% endif %}
+      <li>
+        Page {{ instructor_list.number }}
+        of {{ paginator.num_pages }}
+      </li>
+      {% if next_page_url %}
+        <li>
+          <a href="{{ next_page_url }}">
+            Next</a>
+        </li>
+      {% endif %}
+    </ul>
+  {% endif %}
 {% endblock %}
-
-
