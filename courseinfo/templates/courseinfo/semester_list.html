@@ -7,8 +7,9 @@
 {% block content %}
     <h2>Semester List</h2>
     <div>
-    <a href="{% url 'courseinfo_semester_create_urlpattern' %}">
-        Semester New Course</a>
+      <a href="{% url 'courseinfo_semester_create_urlpattern' %}"
+         class="button button-primary">
+          Create New Semester</a>
     </div>
     <ul>
         {% for semester in semester_list %}
@@ -16,7 +17,7 @@
                 <a href="{{ semester.get_absolute_url }}">{{ semester }}</a>
             </li>
         {% empty %}
-            <li><em>There are currently no sections available.</em></li>
-        {%  endfor %}
+            <li><em>There are currently no semesters available.</em></li>
+        {% endfor %}
     </ul>
 {% endblock %}
