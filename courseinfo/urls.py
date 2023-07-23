@@ -9,10 +9,10 @@ from courseinfo.views import (
     RegistrationList,
     InstructorDetail,
     SectionDetail,
-    SemesterDetail,
     CourseDetail,
-    RegistrationDetail,
+    SemesterDetail,
     StudentDetail,
+    RegistrationDetail,
     InstructorCreate,
     SectionCreate,
     CourseCreate,
@@ -25,15 +25,13 @@ from courseinfo.views import (
     SemesterUpdate,
     StudentUpdate,
     RegistrationUpdate,
-    RegistrationDelete,
     InstructorDelete,
     SectionDelete,
     CourseDelete,
     SemesterDelete,
     StudentDelete,
-
+    RegistrationDelete,
 )
-
 
 urlpatterns = [
 
@@ -83,19 +81,19 @@ urlpatterns = [
 
     path('course/<int:pk>/',
          CourseDetail.as_view(),
-         name='courseinfo_course_detail_list_urlpattern'),
+         name='courseinfo_course_detail_urlpattern'),
 
-    path('course/<int:pk>/delete/',
-         CourseDelete.as_view(),
-         name='courseinfo_course_delete_urlpattern'),
-
-    path('course/Create/',
+    path('course/create/',
          CourseCreate.as_view(),
          name='courseinfo_course_create_urlpattern'),
 
     path('course/<int:pk>/update/',
          CourseUpdate.as_view(),
          name='courseinfo_course_update_urlpattern'),
+
+    path('course/<int:pk>/delete/',
+         CourseDelete.as_view(),
+         name='courseinfo_course_delete_urlpattern'),
 
     path('semester/',
          SemesterList.as_view(),
@@ -105,7 +103,7 @@ urlpatterns = [
          SemesterDetail.as_view(),
          name='courseinfo_semester_detail_urlpattern'),
 
-    path('semester/Create/',
+    path('semester/create/',
          SemesterCreate.as_view(),
          name='courseinfo_semester_create_urlpattern'),
 
@@ -125,7 +123,7 @@ urlpatterns = [
          StudentDetail.as_view(),
          name='courseinfo_student_detail_urlpattern'),
 
-    path('Student/Create/',
+    path('student/create/',
          StudentCreate.as_view(),
          name='courseinfo_student_create_urlpattern'),
 
@@ -145,7 +143,7 @@ urlpatterns = [
          RegistrationDetail.as_view(),
          name='courseinfo_registration_detail_urlpattern'),
 
-    path('Registration/Create/',
+    path('registration/create/',
          RegistrationCreate.as_view(),
          name='courseinfo_registration_create_urlpattern'),
 
@@ -156,6 +154,5 @@ urlpatterns = [
     path('registration/<int:pk>/delete/',
          RegistrationDelete.as_view(),
          name='courseinfo_registration_delete_urlpattern'),
-
 
 ]

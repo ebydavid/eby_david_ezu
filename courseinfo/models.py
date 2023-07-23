@@ -9,7 +9,7 @@ class Period(models.Model):
     period_name = models.CharField(max_length=45, unique=True)
 
     def __str__(self):
-        return '%s' % self.period_name
+        return f'{self.period_name}'
 
     class Meta:
         ordering = ['period_sequence']
@@ -20,7 +20,7 @@ class Year(models.Model):
     year = models.IntegerField(unique=True)
 
     def __str__(self):
-        return '%s' % self.year
+        return f'{self.year}'
 
     class Meta:
         ordering = ['year']
@@ -32,7 +32,7 @@ class Semester(models.Model):
     period = models.ForeignKey(Period, related_name='semesters', on_delete=models.PROTECT)
 
     def __str__(self):
-        return '%s - %s' % (self.year.year, self.period.period_name)
+        return f'{self.year.year} - {self.period.period_name}'
 
     def get_absolute_url(self):
         return reverse('courseinfo_semester_detail_urlpattern',
@@ -62,10 +62,10 @@ class Course(models.Model):
     course_name = models.CharField(max_length=255)
 
     def __str__(self):
-        return '%s - %s' % (self.course_number, self.course_name)
+        return f'{self.course_number} - {self.course_name}'
 
     def get_absolute_url(self):
-        return reverse('courseinfo_course_detail_list_urlpattern',
+        return reverse('courseinfo_course_detail_urlpattern',
                        kwargs={'pk': self.pk}
                        )
 
@@ -86,7 +86,6 @@ class Course(models.Model):
         ]
 
 
-
 class Instructor(models.Model):
     instructor_id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=45)
@@ -96,9 +95,9 @@ class Instructor(models.Model):
     def __str__(self):
         result = ''
         if self.disambiguator == '':
-            result = '%s, %s' % (self.last_name, self.first_name)
+            result = f'{self.last_name}, {self.first_name}'
         else:
-            result = '%s, %s (%s)' % (self.last_name, self.first_name, self.disambiguator)
+            result = f'{self.last_name}, {self.first_name} ({self.disambiguator})'
         return result
 
     def get_absolute_url(self):
@@ -112,15 +111,16 @@ class Instructor(models.Model):
                        )
 
     def get_delete_url(self):
-        return reverse('courseinfo_instructor_delete_urlpattern',
-                       kwargs={'pk': self.pk}
-                       )
-
+        return reverse(
+            'courseinfo_instructor_delete_urlpattern',
+            kwargs={'pk': self.pk}
+        )
 
     class Meta:
         ordering = ['last_name', 'first_name', 'disambiguator']
         constraints = [
-            UniqueConstraint(fields=['last_name', 'first_name', 'disambiguator'], name='unique_instructor')
+            UniqueConstraint(fields=['last_name', 'first_name', 'disambiguator'],
+                             name='unique_instructor')
         ]
 
 
@@ -133,9 +133,9 @@ class Student(models.Model):
     def __str__(self):
         result = ''
         if self.disambiguator == '':
-            result = '%s, %s' % (self.last_name, self.first_name)
+            result = f'{self.last_name}, {self.first_name}'
         else:
-            result = '%s, %s (%s)' % (self.last_name, self.first_name, self.disambiguator)
+            result = f'{self.last_name}, {self.first_name} ({self.disambiguator})'
         return result
 
     def get_absolute_url(self):
@@ -156,19 +156,20 @@ class Student(models.Model):
     class Meta:
         ordering = ['last_name', 'first_name', 'disambiguator']
         constraints = [
-            UniqueConstraint(fields=['last_name', 'first_name', 'disambiguator'], name='unique_student')
+            UniqueConstraint(fields=['last_name', 'first_name', 'disambiguator'],
+                             name='unique_student')
         ]
 
 
 class Section(models.Model):
     section_id = models.AutoField(primary_key=True)
-    section_name = models.CharField(max_length=15)
+    section_name = models.CharField(max_length=20)
     semester = models.ForeignKey(Semester, related_name='sections', on_delete=models.PROTECT)
     course = models.ForeignKey(Course, related_name='sections', on_delete=models.PROTECT)
     instructor = models.ForeignKey(Instructor, related_name='sections', on_delete=models.PROTECT)
 
     def __str__(self):
-        return '%s, %s (%s)' % (self.course.course_number, self.section_name, self.semester.__str__())
+        return f'{self.course.course_number} - {self.section_name} ({self.semester.__str__()})'
 
     def get_absolute_url(self):
         return reverse('courseinfo_section_detail_urlpattern',
@@ -181,25 +182,26 @@ class Section(models.Model):
                        )
 
     def get_delete_url(self):
-        return reverse('courseinfo_section_delete_urlpattern',
-                       kwargs={'pk': self.pk}
-                       )
-
+        return reverse(
+            'courseinfo_section_delete_urlpattern',
+            kwargs={'pk': self.pk}
+        )
 
     class Meta:
         ordering = ['course', 'section_name', 'semester']
         constraints = [
-            UniqueConstraint(fields=['semester', 'course', 'section_name'], name='unique_section')
+            UniqueConstraint(fields=['semester', 'course', 'section_name'],
+                             name='unique_section')
         ]
 
 
 class Registration(models.Model):
     registration_id = models.AutoField(primary_key=True)
-    student = models.ForeignKey(Student, related_name='registrations', on_delete=models.PROTECT)
-    section = models.ForeignKey(Section, related_name='registrations', on_delete=models.PROTECT)
+    student = models.ForeignKey(Student, related_name='registrations',  on_delete=models.PROTECT)
+    section = models.ForeignKey(Section, related_name='registrations',  on_delete=models.PROTECT)
 
     def __str__(self):
-        return '%s / %s' % (self.section, self.student)
+        return f'{self.section} / {self.student}'
 
     def get_absolute_url(self):
         return reverse('courseinfo_registration_detail_urlpattern',
@@ -218,7 +220,6 @@ class Registration(models.Model):
 
     class Meta:
         ordering = ['section', 'student']
-        unique_together = (('section', 'student'),)
         constraints = [
             UniqueConstraint(fields=['section', 'student'],
                              name='unique_registration')
