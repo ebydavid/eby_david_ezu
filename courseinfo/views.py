@@ -6,7 +6,6 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 
 from courseinfo.forms import InstructorForm, SectionForm, CourseForm, SemesterForm, StudentForm, RegistrationForm
 
-
 from .models import (
     Instructor,
     Section,
@@ -17,8 +16,6 @@ from .models import (
 )
 
 from .utils import PageLinksMixin
-
-
 
 
 class InstructorList(LoginRequiredMixin, PermissionRequiredMixin, PageLinksMixin, ListView):
@@ -152,6 +149,7 @@ class CourseDetail(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
         context['section_list'] = section_list
         return context
 
+
 class CourseCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     form_class = CourseForm
     model = Course
@@ -242,6 +240,7 @@ class SemesterDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
                 {'semester': semester}
             )
 
+
 class StudentList(LoginRequiredMixin, PermissionRequiredMixin, PageLinksMixin, ListView):
     paginate_by = 25
     model = Student
@@ -327,6 +326,7 @@ class RegistrationUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView
     model = Registration
     template_name = 'courseinfo/registration_form_update.html'
     permission_required = 'courseinfo.change_registration'
+
 
 class RegistrationDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Registration
