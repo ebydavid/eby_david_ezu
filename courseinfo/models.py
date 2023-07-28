@@ -197,7 +197,7 @@ class Section(models.Model):
 
 class Registration(models.Model):
     registration_id = models.AutoField(primary_key=True)
-    student = models.ForeignKey(Student, related_name='registrations',  on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, related_name='registrations', null=True,  on_delete=models.CASCADE)
     section = models.ForeignKey(Section, related_name='registrations',  on_delete=models.CASCADE)
 
     def __str__(self):
